@@ -1,4 +1,5 @@
-#version 300 es
+#version 330 core
+// #version 300 es
 
 /** Structure that describes parameters of a single sphere moving across the scalar field. */
 struct sphere_descriptor

@@ -1,4 +1,5 @@
-#version 300 es
+#version 330 core
+// #version 300 es
 
 precision highp isampler2D; /**< Specify high precision for isampler2D type. */
 precision highp isampler3D; /**< Specify high precision for isampler3D type. */

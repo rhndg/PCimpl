@@ -4,7 +4,13 @@
 
 #ifndef MARCHINGCUBES_TRIANGULATIONTABLE_H
 #define MARCHINGCUBES_TRIANGULATIONTABLE_H
-#include "GLES3/gl3.h"
+
+
+// #include "GLES3/gl3.h"
+
+#include <GL/glew.h>
+
+
 /** The array that is used for cell triangularization.
  *  Each row in table represents one cell type. Each cell type contains up to 5 triangles.
  *  Each triangle is defined by 3 sequential vertices.

@@ -1,4 +1,5 @@
-#version 300 es
+#version 330 core
+// #version 300 es
 
 /** Precision to avoid division-by-zero errors. */
 #define EPSILON 0.000001f
