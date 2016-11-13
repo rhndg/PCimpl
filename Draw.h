@@ -4,12 +4,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-
-#include "Shader.h"
-#include "Timer.h"
-#include "Matrix.h"
 #include "ShaderCode.h"
-#include "TriangulationTable.h"
 
 // #include <jni.h>
 // #include <android/log.h>
@@ -17,11 +12,12 @@
 // #include "EGL/egl.h"
 // #include "EGL/eglext.h"
 
-#include <GL/glew.h>
 
 #include <string>
 #include <cmath>
+
 //**********************
+#include <GL/glew.h>
 #include <iostream>
 //**********************
 // #define LOG_TAG "libNative"
@@ -37,6 +33,9 @@ using namespace MaliSDK;
 void calc_mvp(Matrix& mvp);
 void setupGraphics(int width, int height);
 void renderFrame(void);
-void cleanup();
+void cleanup(void);
+
+void testSetup(int width, int height);
+void testDraw(void);
 
 #endif  /* DRAW_H */

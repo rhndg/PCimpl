@@ -3,7 +3,7 @@
 // #define LOG_TAG "libNative"
 // #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
-#define LOGE(...) printf("%s\n",__VA_ARGS__)
+#define LOGE(...) printf(__VA_ARGS__)
 
 namespace MaliSDK
 {

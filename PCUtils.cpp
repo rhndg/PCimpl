@@ -5,7 +5,7 @@ GLFWwindow* window;
 double oldTime = glfwGetTime();
 int frames = 0;
 
-void setupWindowAndGLContext(){
+void SetupWindowAndGLContext(){
 	
 	srand(time(NULL));
 
@@ -53,4 +53,38 @@ bool PollForESC(){
 		return true;
 	}
 	return false;
+}
+
+void PrintNewTriTable(){
+	vector<vector<int> > compressedTable;
+	for(int i=0;i!=256;i++){
+		vector<int> tempBuff;
+		tempBuff.clear();
+		for(int j=0;j!=15;j++){
+			if(tri_table[i*15+j]!= -1){
+				tempBuff.push_back(tri_table[i*15+j]);
+			}
+		}
+		compressedTable.push_back(tempBuff);
+	}
+	int counter = 0;
+	vector<int> start;
+	cout<<"{ ";
+
+	for(int i=0;i!=compressedTable.size();i++){
+		start.push_back(counter);
+		for(int j=0;j!=compressedTable[i].size();j++){
+			counter++;
+			cout<<compressedTable[i][j]<<" , ";
+			if(counter%9==0)
+				cout<<endl;
+		}
+	}
+	cout<<"}"<<endl;
+	start.push_back(counter);
+	cout<<endl<<endl<<"{ ";
+	for(int i=0;i!=start.size();i++){
+		cout<<start[i]<<" , ";
+	}
+	cout<<"}"<<endl;
 }

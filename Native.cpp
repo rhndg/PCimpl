@@ -1,24 +1,28 @@
 #include <cstdio>
 #include <cstdlib>
-#include "PCUtils.h"
 #include "Draw.h"
-#include <GL/glew.h>
+//*****************************
+#include "PCUtils.h"
+//*****************************
 #include <string>
 #include <cmath>
 
 using namespace std;
 
 int main(){
-	setupWindowAndGLContext();
+	SetupWindowAndGLContext();
 	setupGraphics(1366, 768);
+	// testSetup(1366,768);
 	while(1){
 		renderFrame();
+		// testDraw();
 		SwapBuffer();
 		if(PollForESC()){
 			cleanup();
 			break;
 		}
 	}
+	// PrintNewTriTable();
 	return 0;
 }
 

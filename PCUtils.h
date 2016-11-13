@@ -9,11 +9,13 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <ctime>
+#include "TriangulationTable.h"
 
 using namespace std;
 
-void setupWindowAndGLContext();
+void SetupWindowAndGLContext();
 void SwapBuffer();
 bool PollForESC();
+void PrintNewTriTable();
 
 #endif /* PCUTILS_H */
