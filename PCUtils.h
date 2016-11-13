@@ -1,3 +1,4 @@
+#ifdef PCIMPL
 #ifndef PCUTILS_H
 #define PCUTILS_H
 
@@ -18,4 +19,5 @@ void SwapBuffer();
 bool PollForESC();
 void PrintNewTriTable();
 
-#endif /* PCUTILS_H */
+#endif /*PCUTILS_H*/
+#endif

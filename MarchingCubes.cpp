@@ -65,13 +65,19 @@ const GLchar* marching_cubes_geo_shader = GLSL(
 	layout(points, max_vertices = 15) out;
 
 
+	uniform int samples_per_axis;
+	uniform float iso_level;
+	uniform sampler3D scalar_field;
+	uniform isampler2D tri_table;
+	int cells_per_axis = samples_per_axis - 1;
+
 	in ivec3 space_position_in[];
 
 	uniform mat4 mvp;
 
 	void main()
-	{
-	    gl_Position = mvp * vec4(vec3(space_position_in[0]) / float(63),1);
+	{	    
+	    gl_Position = mvp * vec4(vec3(space_position_in[0]) / float(cells_per_axis),1);
 	    EmitVertex();
 	    EndPrimitive();
 	}
@@ -106,20 +112,20 @@ void SetUpMarchingCubes(){
     
     GL_CHECK(glLinkProgram(marching_cubes_program_id));
     
-    // marching_cubes_uniform_time_id                                  = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_time_name));
+    marching_cubes_uniform_time_id                                  = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_time_name));
     marching_cubes_uniform_samples_per_axis_id                      = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_samples_per_axis_name));
-    // marching_cubes_uniform_iso_level_id                             = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_iso_level_name));
+    marching_cubes_uniform_iso_level_id                             = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_iso_level_name));
     marching_cubes_uniform_mvp_id                                   = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_mvp_name));
-    // marching_cubes_uniform_scalar_field_sampler_id                  = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_scalar_field_sampler_name));
-    // marching_cubes_uniform_tri_table_sampler_id                     = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_tri_table_sampler_name));
+    marching_cubes_uniform_scalar_field_sampler_id                  = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_scalar_field_sampler_name));
+    marching_cubes_uniform_tri_table_sampler_id                     = GL_CHECK(glGetUniformLocation(marching_cubes_program_id, marching_cubes_uniform_tri_table_sampler_name));
     
     GL_CHECK(glUseProgram(marching_cubes_program_id));
 
     /* Initialize uniforms constant throughout rendering loop. */
     GL_CHECK(glUniform1i(marching_cubes_uniform_samples_per_axis_id,            samples_per_axis));
-    // GL_CHECK(glUniform1f(marching_cubes_uniform_iso_level_id,                   isosurface_level));
-    // GL_CHECK(glUniform1i(marching_cubes_uniform_tri_table_sampler_id,   4               ));
-    // GL_CHECK(glUniform1i(marching_cubes_uniform_scalar_field_sampler_id,1               ));
+    GL_CHECK(glUniform1f(marching_cubes_uniform_iso_level_id,                   isosurface_level));
+    GL_CHECK(glUniform1i(marching_cubes_uniform_tri_table_sampler_id,   4               ));
+    GL_CHECK(glUniform1i(marching_cubes_uniform_scalar_field_sampler_id,1               ));
     GL_CHECK(glUniformMatrix4fv(marching_cubes_uniform_mvp_id, 1, GL_FALSE,     mvp.getAsArray()));
 
 
@@ -161,6 +167,14 @@ void SetUpMarchingCubes(){
 void DrawMarchingCubes(){
 
 	GL_CHECK(glUseProgram(marching_cubes_program_id));
-
     GL_CHECK(glDrawArrays(GL_POINTS, 0, cells_in_3d_space));
+}
+
+void CleanUpMarchingCubes(){
+    GL_CHECK(glDeleteVertexArrays      (1, &marching_cubes_vao_id                            ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_frag_shader_id                    ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_vert_shader_id                    ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_geo_shader_id                     ));
+    GL_CHECK(glDeleteProgram           (    marching_cubes_program_id                        ));
+    GL_CHECK(glDeleteTextures          (1, &marching_cubes_lookup_table_texture_id           ));
 }

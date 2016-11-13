@@ -80,28 +80,12 @@ void renderFrame(void)
 /** Deinitialises OpenGL ES environment. */
 void cleanup()
 {
-    GL_CHECK(glDeleteVertexArrays      (1, &marching_cubes_triangles_vao_id                  ));
-    GL_CHECK(glDeleteShader            (    marching_cubes_triangles_frag_shader_id          ));
-    GL_CHECK(glDeleteShader            (    marching_cubes_triangles_vert_shader_id          ));
-    GL_CHECK(glDeleteProgram           (    marching_cubes_triangles_program_id              ));
-    GL_CHECK(glDeleteTextures          (1, &marching_cubes_triangles_lookup_table_texture_id ));
-    GL_CHECK(glDeleteTextures          (1, &marching_cubes_cells_types_texture_object_id     ));
-    GL_CHECK(glDeleteTransformFeedbacks(1, &marching_cubes_cells_transform_feedback_object_id));
-    GL_CHECK(glDeleteBuffers           (1, &marching_cubes_cells_types_buffer_id             ));
-    GL_CHECK(glDeleteShader            (    marching_cubes_cells_frag_shader_id              ));
-    GL_CHECK(glDeleteShader            (    marching_cubes_cells_vert_shader_id              ));
-    GL_CHECK(glDeleteProgram           (    marching_cubes_cells_program_id                  ));
-    GL_CHECK(glDeleteTextures          (1, &scalar_field_texture_object_id                   ));
-    GL_CHECK(glDeleteTransformFeedbacks(1, &scalar_field_transform_feedback_object_id        ));
-    GL_CHECK(glDeleteBuffers           (1, &scalar_field_buffer_object_id                    ));
-    GL_CHECK(glDeleteShader            (    scalar_field_frag_shader_id                      ));
-    GL_CHECK(glDeleteShader            (    scalar_field_vert_shader_id                      ));
-    GL_CHECK(glDeleteProgram           (    scalar_field_program_id                          ));
-    GL_CHECK(glDeleteTransformFeedbacks(1, &spheres_updater_transform_feedback_object_id     ));
-    GL_CHECK(glDeleteBuffers           (1, &spheres_updater_sphere_positions_buffer_object_id));
-    GL_CHECK(glDeleteShader            (    spheres_updater_frag_shader_id                   ));
-    GL_CHECK(glDeleteShader            (    spheres_updater_vert_shader_id                   ));
-    GL_CHECK(glDeleteProgram           (    spheres_updater_program_id                       ));
+
+    CleanUpSphereUpdater();
+    CleanUpScalarField();
+    CleanUpMarchingCubesCells();
+    // CleanUpMarchingCubesTriangles();
+    CleanUpMarchingCubes();
 }
 
 

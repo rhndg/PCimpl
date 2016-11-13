@@ -1,30 +1,11 @@
-//
-// Created by Rohan Das on 10/30/2016.
-//
-
 #ifndef MARCHINGCUBES_TRIANGULATIONTABLE_H
 #define MARCHINGCUBES_TRIANGULATIONTABLE_H
 
-
-// #include "GLES3/gl3.h"
-
+#ifdef PCIMPL
 #include <GL/glew.h>
-
-
-/** The array that is used for cell triangularization.
- *  Each row in table represents one cell type. Each cell type contains up to 5 triangles.
- *  Each triangle is defined by 3 sequential vertices.
- *  These vertices are "middle" points of the cell edges specified in this table.
- *  For example cell type 0 (see first line) does not define any triangles,
- *  while cell type 1 (see second line) defines one triangle consisting of "middle" points of edges 0,8 and 3 of a cell.
- *  "Middle" points are base points and can be moved closer to edge beginning point or edge ending point.
- *  Edge numeration is according to the Marching Cubes algorithm.
- *  There are exactly 256 cell types due to each vertex having only 2 states: it can be below isosurface or above.
- *  Thus (having 8 corners for each cubic cell) we have 2^8 = 256 cell types.
- *
- *  Table data taken from http://paulbourke.net/geometry/polygonise/
- */
-/* [tri_table chosen part for documentation] */
+#else
+#include "GLES3/gl3.h"
+#endif
 
 const GLuint vertices_per_triangle = 3;                                                      /**< Amount of vertices that defines one triangle. */
 const GLuint triangles_per_cell    = 5;                                                      /**< Amount of triangles that can be generated for a single cell by the Marching Cubes algorithm. */
@@ -39,7 +20,6 @@ const GLint tri_table[mc_cells_types_count * mc_vertices_per_cell] =
    0,  8,  3,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,
    0,  1,  9,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,
    1,  8,  3,     9,  8,  1,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,
-/* [tri_table chosen part for documentation] */
    1,  2, 10,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,
    0,  8,  3,     1,  2, 10,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,
    9,  2, 10,     0,  2,  9,    -1, -1, -1,    -1, -1, -1,    -1, -1, -1,

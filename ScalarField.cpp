@@ -259,3 +259,12 @@ void DrawScalarField(){
     /* [Stage 2 Scalar field generation stage move data to texture] */
 
 }
+
+void CleanUpScalarField(){
+    GL_CHECK(glDeleteTextures          (1, &scalar_field_texture_object_id                   ));
+    GL_CHECK(glDeleteTransformFeedbacks(1, &scalar_field_transform_feedback_object_id        ));
+    GL_CHECK(glDeleteBuffers           (1, &scalar_field_buffer_object_id                    ));
+    GL_CHECK(glDeleteShader            (    scalar_field_frag_shader_id                      ));
+    GL_CHECK(glDeleteShader            (    scalar_field_vert_shader_id                      ));
+    GL_CHECK(glDeleteProgram           (    scalar_field_program_id                          ));
+}

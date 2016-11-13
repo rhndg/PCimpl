@@ -271,3 +271,12 @@ void DrawMarchingCubesCells(){
                             ));
 
 }
+
+void CleanUpMarchingCubesCells(){
+	GL_CHECK(glDeleteTextures          (1, &marching_cubes_cells_types_texture_object_id     ));
+    GL_CHECK(glDeleteTransformFeedbacks(1, &marching_cubes_cells_transform_feedback_object_id));
+    GL_CHECK(glDeleteBuffers           (1, &marching_cubes_cells_types_buffer_id             ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_cells_frag_shader_id              ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_cells_vert_shader_id              ));
+    GL_CHECK(glDeleteProgram           (    marching_cubes_cells_program_id                  ));
+}

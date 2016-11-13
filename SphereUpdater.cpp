@@ -169,3 +169,11 @@ void DrawSphereUpdater(){
     GL_CHECK(glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0));
     /* [Stage 1 Calculate sphere positions stage] */
 }
+
+void CleanUpSphereUpdater(){
+    GL_CHECK(glDeleteTransformFeedbacks(1, &spheres_updater_transform_feedback_object_id     ));
+    GL_CHECK(glDeleteBuffers           (1, &spheres_updater_sphere_positions_buffer_object_id));
+    GL_CHECK(glDeleteShader            (    spheres_updater_frag_shader_id                   ));
+    GL_CHECK(glDeleteShader            (    spheres_updater_vert_shader_id                   ));
+    GL_CHECK(glDeleteProgram           (    spheres_updater_program_id                       ));
+}

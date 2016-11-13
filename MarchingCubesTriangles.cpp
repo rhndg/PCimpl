@@ -508,3 +508,11 @@ void DrawMarchingCubesTriangles(){
     GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, cells_in_3d_space * triangles_per_cell * vertices_per_triangle));
     /* [Stage 4 Run triangle generating and rendering program] */
 }
+
+void CleanUpMarchingCubesTriangles(){
+	GL_CHECK(glDeleteVertexArrays      (1, &marching_cubes_triangles_vao_id                  ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_triangles_frag_shader_id          ));
+    GL_CHECK(glDeleteShader            (    marching_cubes_triangles_vert_shader_id          ));
+    GL_CHECK(glDeleteProgram           (    marching_cubes_triangles_program_id              ));
+    GL_CHECK(glDeleteTextures          (1, &marching_cubes_triangles_lookup_table_texture_id ));
+}

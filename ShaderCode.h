@@ -1,14 +1,29 @@
 #ifndef SHADERCODE_H
 #define SHADERCODE_H
 
+
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <cmath>
+
+#ifdef PCIMPL
+#include <iostream>
 #include <GL/glew.h>
+#define GLSL(src) "#version 330 core\n" #src
+#else
+#include <jni.h>
+#include <android/log.h>
+#include "GLES3/gl3.h"
+#include "EGL/egl.h"
+#include "EGL/eglext.h"
+#define GLSL(src) "#version 300 es\n" #src
+#endif
+
 #include "Timer.h"
 #include "Matrix.h"
 #include "Shader.h"
 #include "TriangulationTable.h"
-
-
-#define GLSL(src) "#version 330 core\n" #src
 
 using namespace std;
 using namespace MaliSDK;

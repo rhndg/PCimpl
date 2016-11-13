@@ -1,3 +1,4 @@
+#ifdef PCIMPL
 #include "PCUtils.h"
 
 GLFWwindow* window;
@@ -88,3 +89,5 @@ void PrintNewTriTable(){
 	}
 	cout<<"}"<<endl;
 }
+
+#endif 
