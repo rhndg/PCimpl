@@ -42,12 +42,13 @@ void setupGraphics(int width, int height)
     GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
     GL_CHECK(glPixelStorei(GL_PACK_ALIGNMENT,   1));
 
+    GL_CHECK(glClearColor(1.0f, 1.0f, 1.0f, 1.0f));
     /* Initialize model view projection matrix. */
     calc_mvp(mvp);
 
     SetUpSphereUpdater();
     SetUpScalarField();
-    SetUpMarchingCubesCells();
+    // SetUpMarchingCubesCells();
     // SetUpMarchingCubesTriangles();
     SetUpMarchingCubes();
 
@@ -71,7 +72,7 @@ void renderFrame(void)
 
     DrawSphereUpdater();
     DrawScalarField();
-    DrawMarchingCubesCells();
+    // DrawMarchingCubesCells();
     // DrawMarchingCubesTriangles();
     DrawMarchingCubes();
 
@@ -84,7 +85,7 @@ void cleanup()
     CleanUpSphereUpdater();
     CleanUpScalarField();
     CleanUpMarchingCubesCells();
-    // CleanUpMarchingCubesTriangles();
+    CleanUpMarchingCubesTriangles();
     CleanUpMarchingCubes();
 }
 

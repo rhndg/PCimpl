@@ -323,7 +323,7 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	        gl_Position                = mvp * vec4(edge_middle_vertex, 1.0);        /* Transform vertex position with MVP-matrix.        */
 	        phong_vertex_position      = gl_Position;                                /* Set vertex position for fragment shader.          */
 	        phong_vertex_normal_vector = vertex_normal;                              /* Set normal vector to surface for fragment shader. */
-	        phong_vertex_color         = vec3(0.7);                                  /* Set vertex color for fragment shader.             */
+	        phong_vertex_color         = vec3(distance(vec3(0,0,0),edge_middle_vertex),distance(vec3(0,1,0),edge_middle_vertex),distance(vec3(1,0,1),edge_middle_vertex));                                  /* Set vertex color for fragment shader.             */
 	    }
 	    else
 	    {
@@ -378,7 +378,7 @@ const GLchar* marching_cubes_triangles_frag_shader = GLSL(
 
 	    /* Scene ambient color. */
 	    const vec3  ambient_color = vec3(0.1, 0.1, 0.1);
-	    const float attenuation   = 1.0;
+	    const float attenuation   = 0.5;
 	    const float shiness       = 3.0;
 
 	    /* Normalize directions. */
@@ -404,7 +404,8 @@ const GLchar* marching_cubes_triangles_frag_shader = GLSL(
 	    }
 
 	    /** Calculate fragment lighting as sum of previous three component. */
-	    FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
+	    // FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
+        FragColor = phong_vertex_position;
 	}
 );
 
