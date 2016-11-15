@@ -48,8 +48,8 @@ void setupGraphics(int width, int height)
 
     SetUpSphereUpdater();
     SetUpScalarField();
-    // SetUpMarchingCubesCells();
-    // SetUpMarchingCubesTriangles();
+    SetUpMarchingCubesCells();
+    SetUpMarchingCubesTriangles();
     SetUpMarchingCubes();
 
     /* Enable facet culling, depth testing and specify front face for polygons. */
@@ -72,9 +72,10 @@ void renderFrame(void)
 
     DrawSphereUpdater();
     DrawScalarField();
-    // DrawMarchingCubesCells();
-    // DrawMarchingCubesTriangles();
-    DrawMarchingCubes();
+    
+    DrawMarchingCubesCells();
+    DrawMarchingCubesTriangles();
+    // DrawMarchingCubes();
 
 }
 

@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
+#include <vector>
 
 #ifdef PCIMPL
 #include <iostream>
@@ -44,6 +45,12 @@ extern Timer timer;
 extern const int n_spheres;
 extern const int n_sphere_position_components;
 extern Matrix    mvp;
+
+extern const int n_particles;
+extern const int space_tesselation_level;
+extern const int space_cells_per_axis;
+extern const int space_cells_in_3d_space;
+
 
 /* 1. Calculate sphere positions stage variable data. */
 

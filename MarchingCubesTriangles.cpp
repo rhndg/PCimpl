@@ -99,22 +99,9 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	 *  @return   normal vector to surface in p1
 	 */
 	vec3 calc_cell_corner_normal(in vec3 p1)
-	{
-	    vec3 result;
-	    vec3 delta;
-
-	    /* Use neighbour samples to calculate derivative. */
-	    delta = vec3(1.0/float(samples_per_axis - 1), 0, 0);
-	    result.x = calc_partial_derivative(p1 - delta, p1 + delta);
-
-	    delta = vec3(0.0, 1.0/float(samples_per_axis - 1), 0.0);
-	    result.y = calc_partial_derivative(p1 - delta, p1 + delta);
-
-	    delta = vec3(0.0, 0.0, 1.0/float(samples_per_axis - 1));
-	    result.z = calc_partial_derivative(p1 - delta, p1 + delta);
-
-	    return result;
-	}
+    {
+        return normalize(textureLod(scalar_field, p1, 0.0).gba);
+    }
 
 	/** Calculates normal for an edge vertex like in an orignal SIGGRAPH paper.
 	 *  First finds normal vectors in edge begin vertex and in edge end vertex, then interpolate.
@@ -404,8 +391,8 @@ const GLchar* marching_cubes_triangles_frag_shader = GLSL(
 	    }
 
 	    /** Calculate fragment lighting as sum of previous three component. */
-	    // FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
-        FragColor = phong_vertex_position;
+	    FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
+        // FragColor = phong_vertex_position;
 	}
 );
 

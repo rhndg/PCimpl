@@ -96,19 +96,7 @@ const GLchar* marching_cubes_geo_shader = GLSL(
 
     vec3 calc_cell_corner_normal(in vec3 p1)
     {
-        vec3 result;
-        vec3 delta;
-
-        delta = vec3(1.0/float(samples_per_axis - 1), 0, 0);
-        result.x = calc_partial_derivative(p1 - delta, p1 + delta);
-
-        delta = vec3(0.0, 1.0/float(samples_per_axis - 1), 0.0);
-        result.y = calc_partial_derivative(p1 - delta, p1 + delta);
-
-        delta = vec3(0.0, 0.0, 1.0/float(samples_per_axis - 1));
-        result.z = calc_partial_derivative(p1 - delta, p1 + delta);
-
-        return result;
+        return normalize(textureLod(scalar_field, p1, 0.0).gba);
     }
 
 
@@ -306,9 +294,11 @@ const GLchar* marching_cubes_frag_shader = GLSL(
                                 * pow(max(0.0, dot(reflect(-light_direction, normal_direction), view_direction)), shiness);
         }
 
-        /** Calculate fragment lighting as sum of previous three component. */
-        FragColor = vec4(diffuse_reflection, 1.0);
+        // * Calculate fragment lighting as sum of previous three component. 
+        // FragColor = phong_vertex_position * max(0.0, dot(normal_direction, light_direction));
         // FragColor = phong_vertex_position;
+        float x = max(0.0, dot(normal_direction, light_direction));
+        FragColor = vec4(vec3(phong_vertex_color.x * x)*phong_vertex_color,1) ;
     }
 );
 

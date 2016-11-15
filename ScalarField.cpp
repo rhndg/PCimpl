@@ -42,7 +42,7 @@ const GLchar* scalar_field_vert_shader = GLSL(
 	/* [Stage 2 Output data] */
 	/* Output data: */
 	/** Calculated scalar field value. */
-	out float scalar_field_value;
+	out vec4 scalar_field_value;
 	/* [Stage 2 Output data] */
 
 	/* [Stage 2 decode_space_position] */
@@ -92,9 +92,10 @@ const GLchar* scalar_field_vert_shader = GLSL(
 	 *  @return         Scalar field value
 	 */
 	/* [Stage 2 calculate_scalar_field_value] */
-	float calculate_scalar_field_value(in vec3 position)
+	vec4 calculate_scalar_field_value(in vec3 position)
 	{
 	    float field_value = 0.0f;
+        vec3 normal = vec3(0.0f);
 
 	    /* Field value in given space position influenced by all spheres. */
 	    for (int i = 0; i < N_SPHERES; i++)
@@ -106,9 +107,10 @@ const GLchar* scalar_field_vert_shader = GLSL(
 	         * Sphere weight (or charge) is stored in w-coordinate.
 	         */
 	        field_value += input_spheres[i].w / pow(max(EPSILON, vertex_sphere_distance), 2.0);
+            normal += normalize(sphere_position-position) * input_spheres[i].w / pow(max(EPSILON, vertex_sphere_distance), 3.0);
 	    }
 
-	    return field_value;
+	    return vec4(field_value,normal);
 	}
 	/* [Stage 2 calculate_scalar_field_value] */
 
@@ -171,7 +173,7 @@ void SetUpScalarField(){
     GL_CHECK(glGenBuffers(1, &scalar_field_buffer_object_id));
     GL_CHECK(glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER, scalar_field_buffer_object_id));
 
-    GL_CHECK(glBufferData(GL_TRANSFORM_FEEDBACK_BUFFER, samples_in_3d_space * sizeof(GLfloat), NULL, GL_STATIC_DRAW));
+    GL_CHECK(glBufferData(GL_TRANSFORM_FEEDBACK_BUFFER, samples_in_3d_space * 4 * sizeof(GL_FLOAT), NULL, GL_STATIC_DRAW));
     GL_CHECK(glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER, 0));
 
     /* Generate and bind transform feedback object. */
@@ -191,7 +193,7 @@ void SetUpScalarField(){
     GL_CHECK(glBindTexture(GL_TEXTURE_3D, scalar_field_texture_object_id));
 
     /* Prepare texture storage for scalar field values. */
-    GL_CHECK(glTexStorage3D(GL_TEXTURE_3D, 1, GL_R32F, samples_per_axis, samples_per_axis, samples_per_axis));
+    GL_CHECK(glTexStorage3D(GL_TEXTURE_3D, 1, GL_RGBA32F, samples_per_axis, samples_per_axis, samples_per_axis));
     /* [Stage 2 Creating texture] */
 
     /* Tune texture settings to use it as a data source. */
@@ -252,7 +254,7 @@ void DrawScalarField(){
                              samples_per_axis, /* Texture have same width as scalar field in buffer                      */
                              samples_per_axis, /* Texture have same height as scalar field in buffer                     */
                              samples_per_axis, /* Texture have same depth as scalar field in buffer                      */
-                             GL_RED,           /* Scalar field gathered in buffer has only one component                 */
+                             GL_RGBA,          /* Scalar field gathered in buffer has only one component                 */
                              GL_FLOAT,         /* Scalar field gathered in buffer is of float type                       */
                              NULL              /* Scalar field gathered in buffer bound to GL_PIXEL_UNPACK_BUFFER target */
                             ));
