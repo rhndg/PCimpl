@@ -46,11 +46,14 @@ void setupGraphics(int width, int height)
     /* Initialize model view projection matrix. */
     calc_mvp(mvp);
 
-    SetUpSphereUpdater();
-    SetUpScalarField();
-    SetUpMarchingCubesCells();
-    SetUpMarchingCubesTriangles();
-    SetUpMarchingCubes();
+    // SetUpSphereUpdater();
+    // SetUpScalarField();
+    // SetUpMarchingCubesCells();
+    // SetUpMarchingCubesTriangles();
+    // SetUpMarchingCubes();
+    
+    SetUpParticleUpdater();
+    SetUpDrawPoints();
 
     /* Enable facet culling, depth testing and specify front face for polygons. */
     GL_CHECK(glEnable   (GL_DEPTH_TEST));
@@ -70,24 +73,25 @@ void renderFrame(void)
     /* Clear the buffers that we are going to render to in a moment. */
     GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-    DrawSphereUpdater();
-    DrawScalarField();
-    
-    DrawMarchingCubesCells();
-    DrawMarchingCubesTriangles();
+    // DrawSphereUpdater();
+    // DrawScalarField();
+    // DrawMarchingCubesCells();
+    // DrawMarchingCubesTriangles();
     // DrawMarchingCubes();
 
+    UpdateParticles();
+    DrawPoints();
 }
 
 /** Deinitialises OpenGL ES environment. */
 void cleanup()
 {
 
-    CleanUpSphereUpdater();
-    CleanUpScalarField();
-    CleanUpMarchingCubesCells();
-    CleanUpMarchingCubesTriangles();
-    CleanUpMarchingCubes();
+    // CleanUpSphereUpdater();
+    // CleanUpScalarField();
+    // CleanUpMarchingCubesCells();
+    // CleanUpMarchingCubesTriangles();
+    // CleanUpMarchingCubes();
 }
 
 

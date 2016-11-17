@@ -240,11 +240,7 @@ const GLchar* marching_cubes_frag_shader = GLSL(
 
     /** Position of the vertex (and fragment) in world space. */
     in  vec4 phong_vertex_position;
-
-    /** Surface normal vector in world space. */
     in  vec3 phong_vertex_normal_vector;
-
-    /** Color passed from vertex shader. */
     in  vec3 phong_vertex_color;
 
     /* Output data: */
@@ -295,10 +291,7 @@ const GLchar* marching_cubes_frag_shader = GLSL(
         }
 
         // * Calculate fragment lighting as sum of previous three component. 
-        // FragColor = phong_vertex_position * max(0.0, dot(normal_direction, light_direction));
-        // FragColor = phong_vertex_position;
-        float x = max(0.0, dot(normal_direction, light_direction));
-        FragColor = vec4(vec3(phong_vertex_color.x * x)*phong_vertex_color,1) ;
+        FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
     }
 );
 

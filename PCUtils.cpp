@@ -40,7 +40,8 @@ void SwapBuffer(){
 	frames++;
 	double now = glfwGetTime ();
 	if(now - oldTime > 1.0){
-		cout<<frames<<endl;
+		double delta = now - oldTime;
+		cout<<float(frames)/delta<<endl;
 		frames = 0;
 		oldTime = now;
 	}

@@ -4,7 +4,7 @@
 #ifdef PCIMPL
 #include <GL/glew.h>
 #else
-#include "GLES3/gl3.h"
+#include "GLES3/gl32.h"
 #endif
 
 const GLuint vertices_per_triangle = 3;                                                      /**< Amount of vertices that defines one triangle. */

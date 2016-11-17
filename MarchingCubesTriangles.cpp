@@ -465,7 +465,6 @@ void SetUpMarchingCubesTriangles(){
                              tri_table             /* Data will be copied directly from tri_table      */
                             ));
 
-
     /* Generate a vertex array object. We'll go with the explanation later. */
     GL_CHECK(glGenVertexArrays(1, &marching_cubes_triangles_vao_id));
 

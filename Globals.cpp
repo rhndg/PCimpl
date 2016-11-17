@@ -15,11 +15,15 @@ const GLuint cells_in_3d_space     = cells_per_axis * cells_per_axis * cells_per
 /** Instance of a timer to measure time moments. */
 Timer timer;
 
-/** Amount of spheres defining scalar field. This value should be synchronized between all files. */
 const int n_spheres = 3;
-
-/** Amount of components in sphere position varying. */
 const int n_sphere_position_components = 4;
 
-/** Matrix that transforms vertices from model space to perspective projected world space. */
+const int n_k_particles             = 8;  // * 1000
+const int space_cells_per_axis      = 16;
+const int space_cells_in_3d_space   = space_cells_per_axis*space_cells_per_axis*space_cells_per_axis;
+const float effect_radius           = 1/float(2*space_cells_per_axis); //max as per shader implementation
+const float particle_radius         = 0.7 * effect_radius;
+const float wall_offset             = 2 * effect_radius;
+
+
 Matrix        mvp;
