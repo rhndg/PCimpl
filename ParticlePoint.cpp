@@ -27,7 +27,6 @@ const GLchar* draw_points_vert_shader = GLSL(
         t.x = pressure;
         gl_Position = mvp * vec4(position,1.0);
         color = vec3(0,0,pressure);
-        // color = velocity ;
     }
 );
 

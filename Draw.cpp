@@ -53,7 +53,10 @@ void setupGraphics(int width, int height)
     // SetUpMarchingCubes();
     
     SetUpParticleUpdater();
+    SetUpParticleSort();
+    SetUpFindStartIndex();
     SetUpDrawPoints();
+
 
     /* Enable facet culling, depth testing and specify front face for polygons. */
     GL_CHECK(glEnable   (GL_DEPTH_TEST));

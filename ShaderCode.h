@@ -46,6 +46,7 @@ extern const int n_spheres;
 extern const int n_sphere_position_components;
 
 extern const int n_k_particles;
+extern const int n_particles;
 extern const int space_cells_per_axis;
 extern const int space_cells_in_3d_space;
 extern const float effect_radius;
@@ -53,6 +54,8 @@ extern const float particle_radius;
 extern const float wall_offset;
 
 extern Matrix    mvp;
+
+extern GLfloat*     position;
 
 /* 1. Calculate sphere positions stage variable data. */
 
@@ -213,5 +216,58 @@ extern GLuint        particle_updater_ordered_index_array_texture_object_id;
 
 void SetUpParticleUpdater();
 void UpdateParticles();
+
+
+/*Sort particles*/
+
+extern GLuint        particle_sort_program_id;
+extern GLuint        particle_sort_vert_shader_id;
+extern GLuint        particle_sort_frag_shader_id;
+
+extern GLuint        particle_sort_new_index_buffer_id;
+
+extern GLuint        particle_sort_uniform_cells_per_axis_id;
+extern const GLchar* particle_sort_uniform_cells_per_axis_name;
+extern GLuint        particle_sort_uniform_n_particles_id;
+extern const GLchar* particle_sort_uniform_n_particles_name;
+extern GLuint        particle_sort_uniform_mask1_id;
+extern const GLchar* particle_sort_uniform_mask1_name;
+extern GLuint        particle_sort_uniform_mask2_id;
+extern const GLchar* particle_sort_uniform_mask2_name;
+extern GLuint        particle_sort_uniform_sampler_index_arr_id;
+extern const GLchar* particle_sort_uniform_sampler_index_arr_name;
+extern GLuint        particle_sort_uniform_sampler_position_arr_id;
+extern const GLchar* particle_sort_uniform_sampler_position_arr_name;
+
+extern GLuint        particle_sort_transform_feedback_object_id;
+extern const GLchar* particle_sort_varying_names[];
+extern GLuint        particle_sort_new_index_texture_object_id;
+
+void SetUpParticleSort();
+void SortParticles();
+
+
+/*find start index*/
+extern GLuint        find_start_program_id;
+extern GLuint        find_start_vert_shader_id;
+extern GLuint        find_start_frag_shader_id;
+
+extern GLuint        find_start_index_buffer_id;
+
+extern GLuint        find_start_uniform_cells_per_axis_id;
+extern const GLchar* find_start_uniform_cells_per_axis_name;
+extern GLuint        find_start_uniform_n_particles_id;
+extern const GLchar* find_start_uniform_n_particles_name;
+extern GLuint        find_start_uniform_sampler_index_arr_id;
+extern const GLchar* find_start_uniform_sampler_index_arr_name;
+extern GLuint        find_start_uniform_sampler_position_arr_id;
+extern const GLchar* find_start_uniform_sampler_position_arr_name;
+
+extern GLuint        find_start_transform_feedback_object_id;
+extern const GLchar* find_start_varying_names[];
+extern GLuint        find_start_index_texture_object_id;
+
+void SetUpFindStartIndex();
+void FindStartIndex();
 
 #endif //SHADERCODE_H
