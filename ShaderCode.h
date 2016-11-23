@@ -30,6 +30,7 @@ using namespace std;
 using namespace MaliSDK;
 
 extern GLfloat model_time;
+extern GLfloat time_delta;
 extern const GLuint tesselation_level;
 extern GLfloat isosurface_level;
 extern unsigned int window_width;
@@ -185,6 +186,7 @@ extern GLuint        draw_points_uniform_mvp_id;
 extern GLuint        draw_points_vao_id;
 void SetUpDrawPoints();
 void DrawPoints();
+void DrawScalarFieldPoints();
 
 /* Particle Updater */
 
@@ -269,5 +271,33 @@ extern GLuint        find_start_index_texture_object_id;
 
 void SetUpFindStartIndex();
 void FindStartIndex();
+
+
+/*Particle Scalar Field*/
+
+extern GLuint        particle_scalar_field_program_id;
+extern GLuint        particle_scalar_field_vert_shader_id;
+extern GLuint        particle_scalar_field_frag_shader_id;
+extern GLuint        particle_scalar_field_buffer_id;
+extern GLuint        particle_scalar_field_transform_feedback_object_id;
+extern const GLchar* particle_scalar_field_varying_name[];
+extern GLuint        particle_scalar_field_texture_object_id;
+extern GLuint        particle_scalar_field_uniform_cells_per_axis_id;
+extern const GLchar* particle_scalar_field_uniform_cells_per_axis_name;
+extern GLuint        particle_scalar_field_uniform_samples_per_axis_id;
+extern const GLchar* particle_scalar_field_uniform_samples_per_axis_name;
+extern GLuint        particle_scalar_field_uniform_n_particles_id;
+extern const GLchar* particle_scalar_field_uniform_n_particles_name;
+extern GLuint        particle_scalar_field_uniform_particle_radius_id;
+extern const GLchar* particle_scalar_field_uniform_particle_radius_name;
+extern GLuint        particle_scalar_field_uniform_sampler_space_arr_id;
+extern const GLchar* particle_scalar_field_uniform_sampler_space_arr_name;
+extern GLuint        particle_scalar_field_uniform_sampler_index_arr_id;
+extern const GLchar* particle_scalar_field_uniform_sampler_index_arr_name;
+extern GLuint        particle_scalar_field_uniform_sampler_position_arr_id;
+extern const GLchar* particle_scalar_field_uniform_sampler_position_arr_name;
+
+void SetUpParticleScalarField();
+void UpdateParticleScalarField();
 
 #endif //SHADERCODE_H

@@ -48,13 +48,14 @@ void setupGraphics(int width, int height)
 
     // SetUpSphereUpdater();
     // SetUpScalarField();
-    // SetUpMarchingCubesCells();
-    // SetUpMarchingCubesTriangles();
+    SetUpMarchingCubesCells();
+    SetUpMarchingCubesTriangles();
     // SetUpMarchingCubes();
     
     SetUpParticleUpdater();
     SetUpParticleSort();
     SetUpFindStartIndex();
+    SetUpParticleScalarField();
     SetUpDrawPoints();
 
 
@@ -71,19 +72,25 @@ void setupGraphics(int width, int height)
 void renderFrame(void)
 {
     /* Update time. */
-    model_time = timer.getTime();
+    // model_time = timer.getTime();
+    // time_delta = timer.getDelta();
+    time_delta = 0.02;
 
     /* Clear the buffers that we are going to render to in a moment. */
     GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     // DrawSphereUpdater();
     // DrawScalarField();
-    // DrawMarchingCubesCells();
-    // DrawMarchingCubesTriangles();
     // DrawMarchingCubes();
 
     UpdateParticles();
-    DrawPoints();
+    UpdateParticleScalarField();
+    // DrawPoints();
+    
+    // DrawScalarFieldPoints();
+   
+    DrawMarchingCubesCells();
+    DrawMarchingCubesTriangles();
 }
 
 /** Deinitialises OpenGL ES environment. */

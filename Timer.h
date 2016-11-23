@@ -17,6 +17,7 @@ namespace MaliSDK
     class Timer
     {
     private:
+        double oldTime;
     #if defined(_WIN32)
         double resetStamp;
         double invFreq;
@@ -40,6 +41,8 @@ namespace MaliSDK
          * \return Float containing the current time.
          */
         float getTime();
+
+        float getDelta();
     };
 }
 #endif /* TIMER_H */

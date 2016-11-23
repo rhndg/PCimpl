@@ -100,7 +100,11 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	 */
 	vec3 calc_cell_corner_normal(in vec3 p1)
     {
-        return normalize(textureLod(scalar_field, p1, 0.0).gba);
+        vec3 normal = textureLod(scalar_field, p1, 0.0).gba;
+        if(length(normal) < 0.00001){
+        	return vec3(0);
+        }
+        return normalize(normal);
     }
 
 	/** Calculates normal for an edge vertex like in an orignal SIGGRAPH paper.
@@ -117,7 +121,13 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	    vec3 edge_start_normal = calc_cell_corner_normal(edge_start);
 	    /* Find normal vector in end vertex of the edge. */
 	    vec3 edge_end_normal   = calc_cell_corner_normal(edge_end);
+	    if(length(edge_start_normal) < 0.00001){
+	    	return edge_end_normal;
+	    }
 
+	    if(length(edge_end_normal) < 0.00001){
+	    	return edge_start_normal;
+	    }
 	    /* Interpolate normal vector. */
 	    return mix(edge_end_normal, edge_start_normal, start_vertex_portion);
 	}
@@ -310,7 +320,7 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	        gl_Position                = mvp * vec4(edge_middle_vertex, 1.0);        /* Transform vertex position with MVP-matrix.        */
 	        phong_vertex_position      = gl_Position;                                /* Set vertex position for fragment shader.          */
 	        phong_vertex_normal_vector = vertex_normal;                              /* Set normal vector to surface for fragment shader. */
-	        phong_vertex_color         = vec3(distance(vec3(0,0,0),edge_middle_vertex),distance(vec3(0,1,0),edge_middle_vertex),distance(vec3(1,0,1),edge_middle_vertex));                                  /* Set vertex color for fragment shader.             */
+	        phong_vertex_color         = vec3(0.3,1.0,1.0);                                  /* Set vertex color for fragment shader.             */
 	    }
 	    else
 	    {
@@ -392,6 +402,7 @@ const GLchar* marching_cubes_triangles_frag_shader = GLSL(
 
 	    /** Calculate fragment lighting as sum of previous three component. */
 	    FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
+	    // FragColor = vec4(phong_vertex_normal_vector, 1.0);
         // FragColor = phong_vertex_position;
 	}
 );
