@@ -1,6 +1,6 @@
 PostFlags = -lGLEW -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -lpthread
 PreFlags = -std=c++11 -w -o Flow
-CXX = g++
+CXX = g++ -DPCIMPL
 all: *.h *.cpp
 	$(CXX) $(PreFlags) *.cpp $(PostFlags)
 clean: 

@@ -4,22 +4,33 @@
 #include <cstdio>
 #include <cstdlib>
 
-// #include <GLES3/gl3.h>
-// #include <android/log.h>
-
-
+#ifdef PCIMPL
 #include <GL/glew.h>
-
-
+#define LOGE(...) fprintf(stderr,__VA_ARGS__)
 #define GL_CHECK(x) \
     x; \
-    // { \
-    //     GLenum glError = glGetError(); \
-    //     if(glError != GL_NO_ERROR) { \
-    //         LOGE("glGetError() = %i (0x%.8x) at %s:%i\n", glError, glError, __FILE__, __LINE__); \
-    //         exit(1); \
-    //     } \
-    // }
+    { \
+        GLenum glError = glGetError(); \
+        if(glError != GL_NO_ERROR && glError != GL_INVALID_ENUM) { \
+            LOGE("glGetError() = %i (0x%.8x) at %s:%i\n", glError, glError, __FILE__, __LINE__); \
+            exit(1); \
+        } \
+    }
+#else
+#define LOG_TAG "libNative"
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define GL_CHECK(x) \
+    x; \
+    { \
+        GLenum glError = glGetError(); \
+        if(glError != GL_NO_ERROR) { \
+            LOGE("glGetError() = %i (0x%.8x) at %s:%i\n", glError, glError, __FILE__, __LINE__); \
+            exit(1); \
+        } \
+    }
+#include <GLES3/gl31.h>
+#include <android/log.h>
+#endif
 
 namespace MaliSDK
 {

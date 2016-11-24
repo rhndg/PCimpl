@@ -5,8 +5,9 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
-
-// #include <android/log.h>
+#ifndef PCIMPL
+#include <android/log.h>
+#endif
 
 namespace MaliSDK
 {
