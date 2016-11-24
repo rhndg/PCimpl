@@ -15,10 +15,10 @@
 #else
 #include <jni.h>
 #include <android/log.h>
-#include "GLES3/gl32.h"
+#include "GLES3/gl31.h"
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
-#define GLSL(src) "#version 320 es\n" #src
+#define GLSL(src) "#version 310 es\n" #src
 #endif
 
 #include "Timer.h"

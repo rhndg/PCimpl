@@ -2,7 +2,7 @@
 
 GLfloat      model_time        = 0.0f;  /**< Time (in seconds), increased each rendering iteration.                                         */
 GLfloat      time_delta        = 0.0f;
-const GLuint tesselation_level = 25;    /**< Level of details you would like to split model into. Please use values from th range [8..256]. */
+const GLuint tesselation_level = 128;    /**< Level of details you would like to split model into. Please use values from th range [8..256]. */
 GLfloat      isosurface_level  = 12.0f; /**< Scalar field's isosurface level.                                                               */
 unsigned int window_width      = 256;   /**< Window width resolution (pixels).                                                              */
 unsigned int window_height     = 256;   /**< Window height resolution (pixels).                                                             */

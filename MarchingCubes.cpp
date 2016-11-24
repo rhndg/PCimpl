@@ -96,14 +96,28 @@ const GLchar* marching_cubes_geo_shader = GLSL(
 
     vec3 calc_cell_corner_normal(in vec3 p1)
     {
-        return normalize(textureLod(scalar_field, p1, 0.0).gba);
+        vec3 normal = textureLod(scalar_field, p1, 0.0).gba;
+        if(length(normal) < 0.00001){
+            return vec3(0);
+        }
+        return normalize(normal);
     }
 
 
     vec3 calc_phong_normal(in float start_vertex_portion, in vec3 edge_start, in vec3 edge_end)
     {
+        /* Find normal vector in begin vertex of the edge. */
         vec3 edge_start_normal = calc_cell_corner_normal(edge_start);
+        /* Find normal vector in end vertex of the edge. */
         vec3 edge_end_normal   = calc_cell_corner_normal(edge_end);
+        if(length(edge_start_normal) < 0.00001){
+            return edge_end_normal;
+        }
+
+        if(length(edge_end_normal) < 0.00001){
+            return edge_start_normal;
+        }
+        /* Interpolate normal vector. */
         return mix(edge_end_normal, edge_start_normal, start_vertex_portion);
     }
 
@@ -291,7 +305,7 @@ const GLchar* marching_cubes_frag_shader = GLSL(
         }
 
         // * Calculate fragment lighting as sum of previous three component. 
-        FragColor = vec4(ambient_lighting + diffuse_reflection + specular_reflection, 1.0);
+        FragColor = vec4(diffuse_reflection.yzx, 1.0);
     }
 );
 

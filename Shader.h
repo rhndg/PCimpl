@@ -28,7 +28,7 @@
             exit(1); \
         } \
     }
-#include <GLES3/gl3.h>
+#include <GLES3/gl31.h>
 #include <android/log.h>
 #endif
 

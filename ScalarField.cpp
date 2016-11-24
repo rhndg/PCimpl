@@ -22,7 +22,7 @@ GLuint        scalar_field_texture_object_id                             = 0;
 
 const GLchar* scalar_field_vert_shader = GLSL(
 	/** Precision to avoid division-by-zero errors. */
-	float EPSILON = 0.000001f;
+	const float EPSILON = 0.000001f;
 
 	/** Amount of spheres defining scalar field. This value should be synchronized between all files. */
 	const int N_SPHERES = 3;

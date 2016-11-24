@@ -71,7 +71,7 @@ const GLchar* marching_cubes_triangles_vert_shader = GLSL(
 	out vec3 phong_vertex_color;         /**< vertex color for fragment colorisation. */
 
 	/** Precision to avoid division-by-zero errors. */
-	float EPSILON = 0.000001f;
+	const float EPSILON = 0.000001f;
 
 	/** Amount of cells taken for each axis of a scalar field. */
 	int CELLS_PER_AXIS = (samples_per_axis - 1);

@@ -1,5 +1,10 @@
 #include "Draw.h"
 
+// int frames = 0;
+// double update_particles_time = 0;
+// double scalar_field_draw = 0;
+// double marching_cubes_draw = 0;
+
 
 void calc_mvp(Matrix& mvp)
 {
@@ -46,18 +51,20 @@ void setupGraphics(int width, int height)
     /* Initialize model view projection matrix. */
     calc_mvp(mvp);
 
-    // SetUpSphereUpdater();
-    // SetUpScalarField();
+    SetUpSphereUpdater();
+    SetUpScalarField();
+
+    
+    // SetUpParticleUpdater();
+    // SetUpParticleSort();
+    // SetUpFindStartIndex();
+    // SetUpParticleScalarField();
+
+    // SetUpDrawPoints();
+
     SetUpMarchingCubesCells();
     SetUpMarchingCubesTriangles();
-    // SetUpMarchingCubes();
-    
-    SetUpParticleUpdater();
-    SetUpParticleSort();
-    SetUpFindStartIndex();
-    SetUpParticleScalarField();
-    SetUpDrawPoints();
-
+    SetUpMarchingCubes();
 
     /* Enable facet culling, depth testing and specify front face for polygons. */
     GL_CHECK(glEnable   (GL_DEPTH_TEST));
@@ -79,18 +86,20 @@ void renderFrame(void)
     /* Clear the buffers that we are going to render to in a moment. */
     GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-    // DrawSphereUpdater();
-    // DrawScalarField();
-    // DrawMarchingCubes();
+    DrawSphereUpdater();
+    DrawScalarField();
 
-    UpdateParticles();
-    UpdateParticleScalarField();
+    // UpdateParticles();
+    // UpdateParticleScalarField();
+    // DrawScalarFieldPoints();
+    
     // DrawPoints();
     
-    // DrawScalarFieldPoints();
    
-    DrawMarchingCubesCells();
-    DrawMarchingCubesTriangles();
+    DrawMarchingCubes();
+    
+    // DrawMarchingCubesCells();
+    // DrawMarchingCubesTriangles();
 }
 
 /** Deinitialises OpenGL ES environment. */
