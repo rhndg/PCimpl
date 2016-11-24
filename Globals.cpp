@@ -19,7 +19,7 @@ Timer timer;
 const int n_spheres = 3;
 const int n_sphere_position_components = 4;
 
-const int n_k_particles             = 4;  // * 1024
+const int n_k_particles             = 2;  // * 1024
 const int n_particles 				= n_k_particles * 1024;
 const int space_cells_per_axis		= 16;
 const int space_cells_in_3d_space   = space_cells_per_axis * space_cells_per_axis * space_cells_per_axis;

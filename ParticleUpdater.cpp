@@ -88,6 +88,7 @@ const GLchar* pressure_update_vert_shader = GLSL(
         return 4.0*dist*dist*dist;
     }
 
+
     float compute_pressure(vec3 effectee, vec3 effector){
         float norm_dist = distance(effector,effectee)/effect_radius;
         return kernel(norm_dist);
@@ -220,11 +221,84 @@ const GLchar* overall_update_vert_shader = GLSL(
         return 4.0*dist*dist*dist;
     }
 
+    float kernel_D1(float dist){
+        if(dist > 1.0 || dist < 0.0){
+            return 0.0;
+        }
+
+        if(dist < 0.5){
+            return - 12.0*dist*dist;
+        }
+
+        dist = 1.0 - dist;
+        return - 12.0*dist*dist;
+    }
     vec3 compute_force(vec3 r1, vec3 v1, float p1, 
                        vec3 r2, vec3 v2, float p2){
-        vec3 force = vec3(0);
+        vec3 r12 = r1 - r2;
+        vec3 v12 = v1 - v2;
+        float p12 = (p1+p2)/2;
+        float dist = length(r12);
+        float D = kernel_D1(dist/effect_radius); // -ve
+        vec3 pressure_force = vec3(0);
+        pressure_force += - 0.15*((1/(p1+0.1))+(1/(p2+0.1))) * D * normalize(r12);
+        // pressure_force += - 0.00005*pow(dist+0.001,-2) * normalize(r12);
 
-        return force;
+        vec3 vicous_force = vec3(0);
+        vicous_force += 0.00001 * v12 * D * pow(dist+0.001,-2) / (p2+0.1);
+
+
+        return pressure_force + vicous_force;
+    }
+
+    vec3 wall_check_position(vec3 p){
+        vec3 r = p;
+        if(r.x < wall_offset){
+            r.x = wall_offset + 0.001;
+        }
+
+        if(r.x > 1 - wall_offset){
+            r.x = 1 - wall_offset - 0.001;
+        }
+
+        if(r.y < wall_offset){
+            r.y = wall_offset+ 0.001;
+        }
+
+        if(r.y > 1 - wall_offset){
+            r.y = 1 - wall_offset - 0.001;
+        }
+
+        if(r.z < wall_offset){
+            r.z = wall_offset+ 0.001;
+        }
+
+        if(r.z > 1 - wall_offset){
+            r.z = 1 - wall_offset- 0.001;
+        }
+
+        return r;
+    }
+
+    vec3 wall_force(vec3 p, vec3 v, float d){
+        vec3 offset = vec3(wall_offset);
+        
+        vec3 R = p - offset;
+        R = R/effect_radius;
+        vec3 D = vec3(kernel_D1(R.x),kernel_D1(R.y),kernel_D1(R.z));
+
+        vec3 force = -(1/(d+0.1)) * D;
+
+        offset = vec3(1-wall_offset);
+        
+        R = p - offset;
+        R = R/effect_radius;
+        D = vec3(kernel_D1(R.x),kernel_D1(R.y),kernel_D1(R.z));
+
+        force += -(1/(d+0.1))*D;
+        
+        return 0.1 * force;
+
     }
 
     vec3 check_wall_collission(vec3 r, vec3 v){
@@ -302,7 +376,7 @@ const GLchar* overall_update_vert_shader = GLSL(
     }
 
     vec3 get_space_force(vec3 pos){
-        return vec3(0,-1,0);
+        return vec3(0,-0.5,0);
     }
 
     void main(){
@@ -348,10 +422,12 @@ const GLchar* overall_update_vert_shader = GLSL(
             }
         }
         force += get_space_force(particle_position);
+        // force += wall_force(particle_position,particle_velocity,particle_pressure);
 
         particle_velocity = particle_velocity + time_delta * force;
         particle_velocity = check_wall_collission(particle_position, particle_velocity);
         particle_position = particle_position + time_delta * particle_velocity;
+        // particle_position = wall_check_position(particle_position);
 
         position = particle_position;
         velocity = particle_velocity;
